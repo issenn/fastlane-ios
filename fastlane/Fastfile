@@ -29,7 +29,7 @@ before_each do |lane, options|
   # ...
 end
 
-lane :run_tests do |options|
+lane :run_test do |options|
   prepare_lane_options(
     options: options,
     bind_params: [
