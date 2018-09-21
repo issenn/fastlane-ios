@@ -29,6 +29,18 @@ before_each do |lane, options|
   # ...
 end
 
+lane :test do |options|
+  identifier = get_info_plist_value(path: 'HelloTalk_Binary/HelloTalk_Binary-Info.plist', key: "CFBundleIdentifier")
+  puts identifier
+  update_app_identifier(
+    app_identifier: 'com.aaa',
+    xcodeproj: 'HelloTalk_Binary.xcodeproj',
+    plist_path: 'HelloTalk_Binary/HelloTalk_Binary-Info.plist'
+  )
+  identifier = get_info_plist_value(path: 'HelloTalk_Binary/HelloTalk_Binary-Info.plist', key: "CFBundleIdentifier")
+  puts identifier
+end
+
 lane :appfile_init do |options|
   prepare_lane_options(
     options: options,
@@ -59,10 +71,8 @@ lane :appfile_init do |options|
   if app_identifier != Actions.lane_context[:APPFILE_APP_IDENTIFIER]
     project_info = get_project_info(xcodeproj: options[:xcodeproj])
     update_app_identifier(
-      # app_identifier: Actions.lane_context[:APPFILE_APP_IDENTIFIER],
-      app_identifier: '123',
-      # xcodeproj: project_info[:xcodeproj],
-      xcodeproj: 'HelloTalk_Binary.xcodeproj',
+      app_identifier: Actions.lane_context[:APPFILE_APP_IDENTIFIER],
+      xcodeproj: project_info[:xcodeproj],
       plist_path: project_info[:info_plist]
     )
   end
