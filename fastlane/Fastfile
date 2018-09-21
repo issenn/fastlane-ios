@@ -44,6 +44,7 @@ lane :appfile_init do |options|
   app_identifier = nil
   if options[:fetch_app_identifier] == true
     app_identifier = CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
+    puts app_identifier
     bind_params.push(Actions::BindParamBuilder.new("App identifier").lane_context(:APPFILE_APP_IDENTIFIER).default_value(app_identifier).required().build())
     puts bind_params
   end
