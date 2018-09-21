@@ -45,6 +45,7 @@ lane :appfile_init do |options|
   if options[:fetch_app_identifier] == true
     app_identifier = CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
     bind_params.push(Actions::BindParamBuilder.new("App identifier").lane_context(:APPFILE_APP_IDENTIFIER).default_value(app_identifier).required().build())
+    puts bind_params
   end
   if options[:fetch_apple_id] == true
     bind_params.push(Actions::BindParamBuilder.new("Apple ID").lane_context(:APPFILE_APPLE_ID).default_value(CredentialsManager::AppfileConfig.try_fetch_value(:apple_id)).build())
