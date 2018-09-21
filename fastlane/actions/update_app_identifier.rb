@@ -29,6 +29,7 @@ module Fastlane
 
           # For each of the build configurations, set app identifier
           configs.each do |c|
+            puts c.build_settings[identifier_key]
             c.build_settings[identifier_key] = params[:app_identifier]
             puts c.build_settings[identifier_key]
           end
