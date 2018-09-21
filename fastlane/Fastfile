@@ -38,9 +38,11 @@ lane :run_test do |options|
       Actions::BindParamBuilder.new(:xcodeproj).env_var("XCODEPROJ").build()
     ]
   )
+  puts '---'
   puts options[:test_scheme]
   puts options[:xcworkspace]
   puts options[:xcodeproj]
+  puts '---'
 =begin
   if files_matching(pattern: "Podfile") != nil
     cocoapods(
