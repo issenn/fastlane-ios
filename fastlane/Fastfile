@@ -107,7 +107,15 @@ end
 
 lane :test do |lane, options|
   gym(
-    scheme: 'HelloTalk_Binary'
+    scheme: 'HelloTalk_Binary',
+    export_options: {
+      method: "ad-hoc",
+      provisioningProfiles: {
+        "com.helloTalk.helloTalk" => "2ae247e6-730f-404b-b2e3-5fb9247691b2",
+        "com.helloTalk.helloTalk.NotificationContentExt" => "900db513-5265-4e70-a221-630065f784c7",
+        "com.helloTalk.helloTalk.NotificationServiceExt" => "a4db3cd7-7ea7-4feb-8193-214f61389dd8"
+      }
+    }
   )
 end
 
