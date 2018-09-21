@@ -43,7 +43,6 @@ lane :run_test do |options|
       repo_update: true
     )
   end
-=begin
   scan(
     workspace: options[:xcworkspace],
     project: options[:xcodeproj],
@@ -51,7 +50,6 @@ lane :run_test do |options|
     slack_only_on_failure: (git_branch() != git_get_master_branch()),
     clean: true
   )
-=end
 end
 
 
