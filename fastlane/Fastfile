@@ -38,11 +38,13 @@ lane :run_test do |options|
       Actions::BindParamBuilder.new(:xcodeproj).env_var("XCODEPROJ").build()
     ]
   )
+=begin
   if files_matching(pattern: "Podfile") != nil
     cocoapods(
       repo_update: true
     )
   end
+=end
   scan(
     workspace: options[:xcworkspace],
     project: options[:xcodeproj],
