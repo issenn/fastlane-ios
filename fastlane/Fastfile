@@ -29,18 +29,6 @@ before_each do |lane, options|
   # ...
 end
 
-lane :test do |options|
-  identifier = get_info_plist_value(path: 'HelloTalk_Binary/HelloTalk_Binary-Info.plist', key: "CFBundleIdentifier")
-  puts identifier
-  update_app_identifier(
-    app_identifier: 'com.aaa',
-    xcodeproj: 'HelloTalk_Binary.xcodeproj',
-    plist_path: 'HelloTalk_Binary/HelloTalk_Binary-Info.plist'
-  )
-  identifier = get_info_plist_value(path: 'HelloTalk_Binary/HelloTalk_Binary-Info.plist', key: "CFBundleIdentifier")
-  puts identifier
-end
-
 lane :appfile_init do |options|
   prepare_lane_options(
     options: options,
@@ -117,6 +105,11 @@ lane :run_test do |options|
   )
 end
 
+lane :test do |lane, options|
+  gym(
+    scheme: 'HelloTalk_Binary'
+  )
+end
 
 after_each do |lane, options|
   # ...
