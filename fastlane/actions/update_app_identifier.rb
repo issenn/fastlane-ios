@@ -5,8 +5,6 @@ module Fastlane
         require 'plist'
         require 'xcodeproj'
 
-        puts 'testing -------'
-
         info_plist_key = 'INFOPLIST_FILE'
         identifier_key = 'PRODUCT_BUNDLE_IDENTIFIER'
 
@@ -14,6 +12,7 @@ module Fastlane
         info_plist_path = resolve_path(params[:plist_path], params[:xcodeproj])
         UI.user_error!("Couldn't find info plist file at path '#{params[:plist_path]}'") unless File.exist?(info_plist_path)
         plist = Plist.parse_xml(info_plist_path)
+        puts plist['CFBundleIdentifier']
 
         # Check if current app identifier product bundle identifier
         if plist['CFBundleIdentifier'] == "$(#{identifier_key})"
