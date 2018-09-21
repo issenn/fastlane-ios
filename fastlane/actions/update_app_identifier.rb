@@ -5,6 +5,8 @@ module Fastlane
         require 'plist'
         require 'xcodeproj'
 
+        puts 'testing -------'
+
         info_plist_key = 'INFOPLIST_FILE'
         identifier_key = 'PRODUCT_BUNDLE_IDENTIFIER'
 
