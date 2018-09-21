@@ -29,6 +29,59 @@ before_each do |lane, options|
   # ...
 end
 
+lane :appfile_init do |options|
+  prepare_lane_options(
+    options: options,
+    bind_params: [
+      Actions::BindParamBuilder.new(:xcodeproj).env_var("XCODEPROJ").build(),
+      Actions::BindParamBuilder.new(:fetch_app_identifier).default_value(true).build(),
+      Actions::BindParamBuilder.new(:fetch_apple_id).default_value(true).build(),
+      Actions::BindParamBuilder.new(:fetch_team_name).default_value(true).build(),
+      Actions::BindParamBuilder.new(:fetch_itc_team_name).default_value(true).build()
+    ]
+  )
+  bind_params = []
+  app_identifier = nil
+  if options[:fetch_app_identifier] == true
+    app_identifier = CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)
+    bind_params.push(Actions::BindParamBuilder.new("App identifier").lane_context(:APPFILE_APP_IDENTIFIER).default_value(app_identifier).required().build())
+  end
+  if options[:fetch_apple_id] == true
+    bind_params.push(Actions::BindParamBuilder.new("Apple ID").lane_context(:APPFILE_APPLE_ID).default_value(CredentialsManager::AppfileConfig.try_fetch_value(:apple_id)).build())
+  end
+  if options[:fetch_team_name] == true
+    bind_params.push(Actions::BindParamBuilder.new("Team name").lane_context(:APPFILE_TEAM_NAME).default_value(CredentialsManager::AppfileConfig.try_fetch_value(:team_name)).build())
+  end
+  if options[:fetch_itc_team_name] == true
+    bind_params.push(Actions::BindParamBuilder.new("iTunes Connect Team name").lane_context(:APPFILE_ITC_TEAM_NAME).default_value(CredentialsManager::AppfileConfig.try_fetch_value(:itc_team_name)).build())
+  end
+  user_validation(bind_params: bind_params)
+  if app_identifier != Actions.lane_context[:APPFILE_APP_IDENTIFIER]
+    project_info = get_project_info(xcodeproj: options[:xcodeproj])
+    update_app_identifier(
+      app_identifier: Actions.lane_context[:APPFILE_APP_IDENTIFIER],
+      xcodeproj: project_info[:xcodeproj],
+      plist_path: project_info[:info_plist]
+    )
+  end
+  app_file_data = ""
+  if app_identifier = Actions.lane_context[:APPFILE_APP_IDENTIFIER]
+    app_file_data += "app_identifier \"#{app_identifier}\" # The bundle identifier of your app\n"
+  end
+  if apple_id = Actions.lane_context[:APPFILE_APPLE_ID]
+    app_file_data += "apple_id \"#{apple_id}\" # Your Apple email address\n"
+  end
+  if team_name = Actions.lane_context[:APPFILE_TEAM_NAME]
+    app_file_data += "team_name \"#{team_name}\"\n"
+  end
+  if itc_team_name = Actions.lane_context[:APPFILE_ITC_TEAM_NAME]
+    app_file_data += "itc_team_name \"#{itc_team_name}\"\n"
+  end
+  File.open("Appfile", "w") { |file|
+    file.puts(app_file_data)
+  }
+end
+
 lane :run_test do |options|
   prepare_lane_options(
     options: options,
@@ -38,13 +91,11 @@ lane :run_test do |options|
       Actions::BindParamBuilder.new(:xcodeproj).env_var("XCODEPROJ").build()
     ]
   )
-=begin
   if files_matching(pattern: "Podfile") != nil
     cocoapods(
       repo_update: true
     )
   end
-=end
   scan(
     workspace: options[:xcworkspace],
     project: options[:xcodeproj],
