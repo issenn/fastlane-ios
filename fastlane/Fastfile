@@ -60,7 +60,8 @@ lane :appfile_init do |options|
     project_info = get_project_info(xcodeproj: options[:xcodeproj])
     update_app_identifier(
       app_identifier: Actions.lane_context[:APPFILE_APP_IDENTIFIER],
-      xcodeproj: project_info[:xcodeproj],
+      # xcodeproj: project_info[:xcodeproj],
+      xcodeproj: 'HelloTalk_Binary.xcodeproj',
       plist_path: project_info[:info_plist]
     )
   end
