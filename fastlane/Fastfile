@@ -109,7 +109,7 @@ lane :test do |lane, options|
   if files_matching(pattern: "Podfile") != nil
     cocoapods(
       repo_update: false,
-      #silent: false,
+      silent: false,
       #verbose: true,
       #use_bundle_exec: true,
       podfile: './Podfile'
