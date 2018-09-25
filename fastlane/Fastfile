@@ -132,7 +132,6 @@ lane :test do |lane, options|
       }
     )
   end
-=begin
   gym(
     scheme: 'HelloTalk_Binary',
     # silent: true,
@@ -147,7 +146,6 @@ lane :test do |lane, options|
       }
     }
   )
-=end
 end
 
 after_each do |lane, options|
