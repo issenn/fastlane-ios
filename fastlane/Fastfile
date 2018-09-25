@@ -133,18 +133,18 @@ lane :test do |lane, options|
     )
   end
   gym(
-    scheme: 'HelloTalk_Binary',
+    # scheme: 'HelloTalk_Binary',
     # silent: true,
-    clean: false,
-    configuration: "Release",
-    export_options: {
-      method: "ad-hoc",
-      provisioningProfiles: {
-        "com.helloTalk.helloTalk" => "PackageConfig/HelloTalk_Binary_AdHoc.mobileprovision",
-        "com.helloTalk.helloTalk.NotificationContentExt" => "PackageConfig/NotificationContentExt_AdHoc.mobileprovision",
-        "com.helloTalk.helloTalk.NotificationServiceExt" => "PackageConfig/NotificationServiceExt_AdHoc.mobileprovision"
-      }
-    }
+    # clean: false,
+    # configuration: "Release",
+    # export_options: {
+      # method: "ad-hoc",
+      #provisioningProfiles: {
+      #  "com.helloTalk.helloTalk" => "PackageConfig/HelloTalk_Binary_AdHoc.mobileprovision",
+      #  "com.helloTalk.helloTalk.NotificationContentExt" => "PackageConfig/NotificationContentExt_AdHoc.mobileprovision",
+      #  "com.helloTalk.helloTalk.NotificationServiceExt" => "PackageConfig/NotificationServiceExt_AdHoc.mobileprovision"
+      #}
+    #}
   )
 end
 
