@@ -108,11 +108,19 @@ end
 lane :test do |lane, options|
   if files_matching(pattern: "Podfile") != nil
     cocoapods(
-      repo_update: true
+      repo_update: false,
+      silent: false,
+      verbose: true,
+      use_bundle_exec: true,
+      podfile: './Podfile',
+      try_repo_update_on_error: true
     )
   end
   gym(
     scheme: 'HelloTalk_Binary',
+    # silent: true,
+    clean: false,
+    configuration: "Release",
     export_options: {
       method: "ad-hoc",
       provisioningProfiles: {
