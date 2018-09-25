@@ -112,13 +112,22 @@ lane :test do |lane, options|
       silent: false,
       verbose: true,
       use_bundle_exec: true,
-      podfile: './Podfile',
+      podfile: './Podfile1',
       try_repo_update_on_error: true,
       error_callback: lambda { |result|
-        slack(
-          message: "Hi! @issenn \r\n cocoapods install failed.",
-          success: false,
-          default_payloads: [:git_branch, :lane, :git_author, :test_result]
+        cocoapods(
+          repo_update: true,
+          silent: false,
+          verbose: true,
+          use_bundle_exec: true,
+          podfile: './Podfile',
+          error_callback: lambda { |result|
+            slack(
+              message: "Hi! @issenn \r\n cocoapods install failed.",
+              success: false,
+              default_payloads: [:git_branch, :lane, :git_author, :test_result]
+            )
+          }
         )
       }
     )
