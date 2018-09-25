@@ -113,7 +113,12 @@ lane :test do |lane, options|
       verbose: true,
       use_bundle_exec: true,
       podfile: './Podfile',
-      try_repo_update_on_error: true
+      try_repo_update_on_error: true,
+      error_callback: lambda { |result|
+        cocoapods(
+          repo_update: true
+          )
+      }
     )
   end
 =begin
