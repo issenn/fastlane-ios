@@ -111,7 +111,7 @@ lane :test do |lane, options|
       repo_update: false,
       silent: false,
       verbose: true,
-      #use_bundle_exec: true,
+      use_bundle_exec: true,
       podfile: './Podfile'
       # try_repo_update_on_error: true
     )
