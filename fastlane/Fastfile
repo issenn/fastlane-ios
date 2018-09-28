@@ -142,17 +142,21 @@ lane :test do |lane, options|
     # silent: true,
     # clean: false,
     # configuration: "Release",
-    export_options: {
+    # export_options: {
       # method: "ad-hoc",
       # method: options[:export_method],
-      iCloudContainerEnvironment: "Production",
+      # manifest: {
+      #   appURL: "https://example.com/My App.ipa",
+      # },
+      # thinning: "<thin-for-all-variants>",
+      # iCloudContainerEnvironment: "Production"
       # teamID: "Apple Team ID Here",
       #provisioningProfiles: {
       #  "com.helloTalk.helloTalk" => "PackageConfig/HelloTalk_Binary_AdHoc.mobileprovision",
       #  "com.helloTalk.helloTalk.NotificationContentExt" => "PackageConfig/NotificationContentExt_AdHoc.mobileprovision",
       #  "com.helloTalk.helloTalk.NotificationServiceExt" => "PackageConfig/NotificationServiceExt_AdHoc.mobileprovision"
       #}
-    }
+    # }
   )
 end
 
