@@ -1,3 +1,7 @@
+# fastlane_require 'dotenv'
+# fastlane_require 'spaceship'
+# fastlane_require 'time'
+
 # Uncomment the line if you want fastlane to automatically update itself
 # update_fastlane
 
@@ -132,6 +136,7 @@ lane :test do |lane, options|
       }
     )
   end
+  match
   gym(
     # scheme: 'HelloTalk_Binary',
     # silent: true,
@@ -139,7 +144,9 @@ lane :test do |lane, options|
     # configuration: "Release",
     export_options: {
       # method: "ad-hoc",
+      # method: options[:export_method],
       iCloudContainerEnvironment: "Production",
+      # teamID: "Apple Team ID Here",
       #provisioningProfiles: {
       #  "com.helloTalk.helloTalk" => "PackageConfig/HelloTalk_Binary_AdHoc.mobileprovision",
       #  "com.helloTalk.helloTalk.NotificationContentExt" => "PackageConfig/NotificationContentExt_AdHoc.mobileprovision",
