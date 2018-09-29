@@ -87,7 +87,6 @@ lane :appfile_init do |options|
 end
 
 lane :run_test do |options|
-  puts options[:export_method]
   prepare_lane_options(
     options: options,
     bind_params: [
@@ -111,6 +110,7 @@ lane :run_test do |options|
 end
 
 lane :test do |lane, options|
+  puts options[:export_method]
   if files_matching(pattern: "Podfile") != nil
     cocoapods(
       repo_update: false,
