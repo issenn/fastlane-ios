@@ -137,13 +137,15 @@ lane :test do |lane, options|
     )
   end
   match
-  gym()
-    # scheme: 'HelloTalk_Binary',
+  gym(
+    workspace: options[:workspaceName],
+    scheme: options[:scheme],
     # silent: true,
     # clean: false,
     # configuration: "Release",
-    # export_options: {
-      # method: options[:export_method],
+    export_options: {
+      # method: options[:exportMethod],
+      # method: options[:exportOptions][:method],
       # manifest: {
       #   appURL: "https://example.com/My App.ipa",
       # },
@@ -151,8 +153,11 @@ lane :test do |lane, options|
       #  "com.helloTalk.helloTalk" => "PackageConfig/HelloTalk_Binary_AdHoc.mobileprovision",
       #  "com.helloTalk.helloTalk.NotificationContentExt" => "PackageConfig/NotificationContentExt_AdHoc.mobileprovision",
       #  "com.helloTalk.helloTalk.NotificationServiceExt" => "PackageConfig/NotificationServiceExt_AdHoc.mobileprovision"
-      #}
-    # }
+      #},
+      # iCloudContainerEnvironment: options[:exportOptions][:iCloudContainerEnvironment],
+      iCloudContainerEnvironment: "Production",
+    }
+  )
 end
 
 lane :cert_id do |lane, options|
