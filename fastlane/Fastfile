@@ -110,13 +110,7 @@ lane :run_test do |options|
 end
 
 lane :test do |lane, options|
-=begin
-  get_provisioning_profile(
-    adhoc: true,
-    force: true,
-    filename: "myFile.mobileprovision"
-  )
-=end
+  puts options
   if files_matching(pattern: "Podfile") != nil
     cocoapods(
       repo_update: false,
@@ -143,22 +137,13 @@ lane :test do |lane, options|
       }
     )
   end
-  match
+  # match
   gym(
-    # silent: true,
-    # clean: false,
-    # configuration: "Release",
     export_options: {
-      # method: options[:exportMethod],
-      # method: options[:exportOptions][:method],
-      # manifest: {
-      #   appURL: "https://example.com/My App.ipa",
-      # },
-      #provisioningProfiles: {
-      #  "com.helloTalk.helloTalk" => "PackageConfig/HelloTalk_Binary_AdHoc.mobileprovision",
-      #  "com.helloTalk.helloTalk.NotificationContentExt" => "PackageConfig/NotificationContentExt_AdHoc.mobileprovision",
-      #  "com.helloTalk.helloTalk.NotificationServiceExt" => "PackageConfig/NotificationServiceExt_AdHoc.mobileprovision"
-      #},
+      compileBitcode: false,
+      stripSwiftSymbols: true,
+      uploadBitcode: false,
+      uploadSymbols: false,
       iCloudContainerEnvironment: "Production"
     }
   )
