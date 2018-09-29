@@ -136,7 +136,7 @@ lane :test do |lane, options|
       }
     )
   end
-  match()
+  match
   gym(
     # scheme: 'HelloTalk_Binary',
     # silent: true,
