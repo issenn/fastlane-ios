@@ -110,7 +110,6 @@ lane :run_test do |options|
 end
 
 lane :test do |lane, options|
-  puts options
   if files_matching(pattern: "Podfile") != nil
     cocoapods(
       repo_update: false,
@@ -144,6 +143,7 @@ lane :test do |lane, options|
       stripSwiftSymbols: true,
       uploadBitcode: false,
       uploadSymbols: false,
+      thinning: "<thin-for-all-variants>",
       iCloudContainerEnvironment: "Production"
     }
   )
