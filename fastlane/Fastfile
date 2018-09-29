@@ -110,8 +110,6 @@ lane :run_test do |options|
 end
 
 lane :test do |lane, options|
-  puts options
-  puts '-------'
   if files_matching(pattern: "Podfile") != nil
     cocoapods(
       repo_update: false,
@@ -140,8 +138,6 @@ lane :test do |lane, options|
   end
   match
   gym(
-    workspace: options[:workspace],
-    scheme: options[:scheme],
     # silent: true,
     # clean: false,
     # configuration: "Release",
@@ -157,7 +153,7 @@ lane :test do |lane, options|
       #  "com.helloTalk.helloTalk.NotificationServiceExt" => "PackageConfig/NotificationServiceExt_AdHoc.mobileprovision"
       #},
       # iCloudContainerEnvironment: options[:exportOptions][:iCloudContainerEnvironment],
-      iCloudContainerEnvironment: "Production",
+      iCloudContainerEnvironment: "Production"
     }
   )
 end
