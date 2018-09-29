@@ -136,7 +136,7 @@ lane :test do |lane, options|
       }
     )
   end
-  # match
+  match
   gym(
     export_options: {
       compileBitcode: false,
