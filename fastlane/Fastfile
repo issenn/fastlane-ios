@@ -110,7 +110,7 @@ lane :run_test do |options|
 end
 
 lane :test do |lane, options|
-  puts options[:export_method]
+  puts options[:exportMethod]
   if files_matching(pattern: "Podfile") != nil
     cocoapods(
       repo_update: false,
