@@ -136,21 +136,17 @@ lane :test do |lane, options|
       }
     )
   end
-  # match
+  match()
   gym(
     # scheme: 'HelloTalk_Binary',
     # silent: true,
     # clean: false,
     # configuration: "Release",
     # export_options: {
-      # method: "ad-hoc",
       # method: options[:export_method],
       # manifest: {
       #   appURL: "https://example.com/My App.ipa",
       # },
-      # thinning: "<thin-for-all-variants>",
-      # iCloudContainerEnvironment: "Production"
-      # teamID: "Apple Team ID Here",
       #provisioningProfiles: {
       #  "com.helloTalk.helloTalk" => "PackageConfig/HelloTalk_Binary_AdHoc.mobileprovision",
       #  "com.helloTalk.helloTalk.NotificationContentExt" => "PackageConfig/NotificationContentExt_AdHoc.mobileprovision",
