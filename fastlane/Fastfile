@@ -141,7 +141,7 @@ lane :test do |lane, options|
     # silent: true,
     # clean: false,
     # configuration: "Release",
-    export_options: {
+    # export_options: {
       # method: options[:exportMethod],
       # method: options[:exportOptions][:method],
       # manifest: {
@@ -153,8 +153,8 @@ lane :test do |lane, options|
       #  "com.helloTalk.helloTalk.NotificationServiceExt" => "PackageConfig/NotificationServiceExt_AdHoc.mobileprovision"
       #},
       # iCloudContainerEnvironment: options[:exportOptions][:iCloudContainerEnvironment],
-      iCloudContainerEnvironment: "Production"
-    }
+      # iCloudContainerEnvironment: "Production"
+    # }
   )
 end
 
