@@ -156,17 +156,6 @@ lane :test do |lane, options|
   )
 end
 
-desc "Upload beta to Crashlytics"
-lane :crashlytics do
-  crashlytics(
-    # ipa_path: "./build/IPA/MyApp.ipa",
-    # crashlytics_path: "./build/IPA/MyApp.app.dSYM.zip",
-    # notifications: false,
-    api_token:"90c598862d9b7a882d536397e2b64402a7da4864",
-    build_secret:"a63f9da4df2c85fcf47730b61e1890c1143217785aa51030a9fefb5a74cc9434"
-  )
-end
-
 lane :do_get_cert_id do |lane, options|
   require 'spaceship'
   Spaceship.login('issenn@hellotalk.com')
