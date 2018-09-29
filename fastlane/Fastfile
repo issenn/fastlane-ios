@@ -87,7 +87,7 @@ lane :appfile_init do |options|
 end
 
 lane :run_test do |options|
-  puts options
+  puts options[:export_method]
   prepare_lane_options(
     options: options,
     bind_params: [
