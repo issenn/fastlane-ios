@@ -138,7 +138,7 @@ lane :test do |lane, options|
   end
   match
   gym(
-    workspace: options[:workspaceName],
+    workspace: options[:workspace],
     scheme: options[:scheme],
     # silent: true,
     # clean: false,
