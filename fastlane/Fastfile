@@ -33,7 +33,7 @@ before_each do |lane, options|
   # ...
 end
 
-lane :appfile_init do |options|
+lane :do_appfile_init do |options|
   prepare_lane_options(
     options: options,
     bind_params: [
@@ -86,7 +86,7 @@ lane :appfile_init do |options|
   }
 end
 
-lane :run_test do |options|
+lane :do_run_tests do |options|
   prepare_lane_options(
     options: options,
     bind_params: [
@@ -149,7 +149,7 @@ lane :test do |lane, options|
   )
 end
 
-lane :cert_id do |lane, options|
+lane :do_get_cert_id do |lane, options|
   require 'spaceship'
   Spaceship.login('issenn@hellotalk.com')
   Spaceship.select_team
