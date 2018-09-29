@@ -137,12 +137,12 @@ lane :test do |lane, options|
     )
   end
   match
-  gym(
+  gym()
     # scheme: 'HelloTalk_Binary',
     # silent: true,
     # clean: false,
     # configuration: "Release",
-    export_options: {
+    # export_options: {
       # method: options[:export_method],
       # manifest: {
       #   appURL: "https://example.com/My App.ipa",
@@ -152,9 +152,7 @@ lane :test do |lane, options|
       #  "com.helloTalk.helloTalk.NotificationContentExt" => "PackageConfig/NotificationContentExt_AdHoc.mobileprovision",
       #  "com.helloTalk.helloTalk.NotificationServiceExt" => "PackageConfig/NotificationServiceExt_AdHoc.mobileprovision"
       #}
-      iCloudContainerEnvironment: "Production"
-    }
-  )
+    # }
 end
 
 lane :cert_id do |lane, options|
