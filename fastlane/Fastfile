@@ -151,6 +151,7 @@ lane :test do |lane, options|
     }
   )
   upload_symbols_to_crashlytics()
+  do_upload_firim
 end
 
 lane :do_upload_firim do |lane, options|
