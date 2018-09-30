@@ -153,6 +153,7 @@ lane :test do |lane, options|
     ipa_path: "./build/HelloTalk_Binary.ipa_2.7.3.ipa",
     crashlytics_path: "./build/dSYMs.zip",
     # notifications: false,
+    debug: true,
     api_token:"71357d14bafe162f9a5211a7f7ef0b7d2c5438eb",
     build_secret:"5c8af767d1d603f9a99783af71d85b127d0f8535d340362e2422158b6bbccec4"
   )
