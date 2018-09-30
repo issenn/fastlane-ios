@@ -163,7 +163,7 @@ lane :test do |lane, options|
   upload_symbols_to_crashlytics(
     api_token: "71357d14bafe162f9a5211a7f7ef0b7d2c5438eb",
     # dsym_path: "./build/IPA/MyApp.app.dSYM.zip"
-    dsym_path: "./build/IPA/MyApp.app.dSYM.zip"
+    dsym_path: "./build/IPA/HelloTalk_Binary.app.dSYM.zip"
   )
 end
 
