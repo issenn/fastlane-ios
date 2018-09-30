@@ -110,7 +110,6 @@ lane :do_run_tests do |options|
 end
 
 lane :test do |lane, options|
-=begin
   if files_matching(pattern: "Podfile") != nil
     cocoapods(
       repo_update: false,
@@ -137,7 +136,7 @@ lane :test do |lane, options|
       }
     )
   end
-  # match
+  match
   gym(
     export_options: {
       compileBitcode: false,
@@ -148,10 +147,9 @@ lane :test do |lane, options|
       iCloudContainerEnvironment: "Production"
     }
   )
-
+=begin
   crashlytics(
     ipa_path: "./build/HelloTalk_Binary.ipa_2.7.3.ipa",
-    crashlytics_path: "./build/MyApp.app.dSYM.zip",
     # notifications: false,
     debug: true,
     api_token: "71357d14bafe162f9a5211a7f7ef0b7d2c5438eb",
@@ -159,8 +157,9 @@ lane :test do |lane, options|
   )
 =end
   upload_symbols_to_crashlytics(
-    api_token: "71357d14bafe162f9a5211a7f7ef0b7d2c5438eb",
-    dsym_path: "./build/MyApp.app.dSYM.zip"
+    api_token: "90c598862d9b7a882d536397e2b64402a7da4864",
+    # dsym_path: "./build/IPA/MyApp.app.dSYM.zip"
+    dsym_path: "./build/IPA/MyApp.app.dSYM.zip"
   )
 end
 
