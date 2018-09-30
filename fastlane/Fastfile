@@ -11,9 +11,9 @@ before_all do |lane, options|
   # ENV['MAILGUN_APIKEY'] = '5d21a2e0cce1996b200d8f991d72856d-a4502f89-ce938adb'
   # ENV['FIR_APP_TOKEN'] = '9611b6a99d280463039cbb64b7eb24ca'
   ENV["GIT_BRANCH"] = git_branch
-  puts get_version_number
+  ENV['VERSIONNAME'] ||= get_version_number
+  ENV['VERSIONCODE'] ||= get_info_plist_value(key: "CFBundleVersion")
   # puts get_build_number
-  puts get_info_plist_value(key: "CFBundleVersion")
   ENV['CHANGELOG'] = read_changelog(
     changelog_path: './CHANGELOG.md', # Specify path to CHANGELOG.md
     section_identifier: '[Unreleased]', # Specify what section to read
@@ -161,8 +161,8 @@ lane :do_upload_firim do |lane, options|
     )
     change_log = "[#{ENV['GIT_BRANCH']}]\r\n---\r\n" + ENV['CHANGELOG']
     firim(
-      app_version: get_version_name,
-      app_build_version: get_version_code,
+      app_version: ENV['VERSIONNAME'],
+      app_build_version: ENV['VERSIONCODE'],
       app_changelog: change_log
     )
     slack(
