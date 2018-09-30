@@ -10,7 +10,8 @@ before_all do |lane, options|
   # ENV['MAILGUN_SANDBOX_POSTMASTER'] = 'issenn@sandboxc3b6b7d6022b484eabc7c39f728536a5.mailgun.org'
   # ENV['MAILGUN_APIKEY'] = '5d21a2e0cce1996b200d8f991d72856d-a4502f89-ce938adb'
   # ENV['FIR_APP_TOKEN'] = '9611b6a99d280463039cbb64b7eb24ca'
-  # ENV["GIT_BRANCH"] = git_branch
+  ENV["GIT_BRANCH"] = git_branch
+  puts get_version_number
   ENV['CHANGELOG'] = read_changelog(
     changelog_path: './CHANGELOG.md', # Specify path to CHANGELOG.md
     section_identifier: '[Unreleased]', # Specify what section to read
@@ -137,7 +138,7 @@ lane :test do |lane, options|
     )
   end
   match
-  gym(
+  ENV['DELIVER_IPA_PATH']=gym(
     export_options: {
       compileBitcode: false,
       stripSwiftSymbols: true,
@@ -147,16 +148,48 @@ lane :test do |lane, options|
       iCloudContainerEnvironment: "Production"
     }
   )
-=begin
-  crashlytics(
-    ipa_path: "./build/HelloTalk_Binary.ipa_2.7.3.ipa",
-    # notifications: false,
-    debug: true,
-    api_token: "71357d14bafe162f9a5211a7f7ef0b7d2c5438eb",
-    build_secret: "5c8af767d1d603f9a99783af71d85b127d0f8535d340362e2422158b6bbccec4"
-  )
-=end
   upload_symbols_to_crashlytics()
+end
+
+lane :do_upload_firim do |lane, options|
+  begin
+    slack(
+      message: "Hi! @issenn \r\n A new app uploading \r\nFlavor: #{flavor}",
+      default_payloads: [:git_branch, :lane, :git_author]
+    )
+    change_log = "[#{ENV['GIT_BRANCH']}]\r\n---\r\n" + ENV['CHANGELOG']
+    firim(
+      app_version: get_version_name,
+      app_build_version: get_version_code,
+      app_changelog: change_log
+    )
+    slack(
+      message: "Hi! @issenn \r\n A new app upload success \r\nFlavor: #{flavor} \r\n#{ENV['CHANGELOG']}",
+      success: true,
+      default_payloads: [:git_branch, :lane, :git_author, :test_result]
+    )
+    send_e_mail(
+      stmp_server: "smtp.exmail.qq.com",
+      user_name: "update@hellotalk.com",
+      password: "Hello123",
+      subject: "default",
+      message_body: "Hi! @issenn \r\n A new app upload success \r\nFlavor: #{flavor} \r\n#{ENV['CHANGELOG']}"
+    )
+    $upload_retry=0
+  rescue => ex
+    $upload_retry += 1
+    if $upload_retry < 3
+      do_upload_firim
+    else
+      slack(
+        message: "Hi! @issenn \r\n A new app upload failed \r\nFlavor: #{flavor}",
+        success: false,
+        default_payloads: [:git_branch, :lane, :git_author, :test_result]
+      )
+      # raise ex
+      puts ex
+    end
+  end
 end
 
 lane :do_get_cert_id do |lane, options|
