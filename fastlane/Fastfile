@@ -110,6 +110,7 @@ lane :do_run_tests do |options|
 end
 
 lane :test do |lane, options|
+=begin
   if files_matching(pattern: "Podfile") != nil
     cocoapods(
       repo_update: false,
@@ -147,12 +148,13 @@ lane :test do |lane, options|
       iCloudContainerEnvironment: "Production"
     }
   )
+=end
   crashlytics(
-    # ipa_path: "./build/IPA/MyApp.ipa",
-    # crashlytics_path: "./build/IPA/MyApp.app.dSYM.zip",
+    ipa_path: "./build/HelloTalk_Binary.ipa_2.7.3.ipa",
+    crashlytics_path: "./build/dSYMs.zip",
     # notifications: false,
-    api_token:"71357d14bafe162f9a5211a7f7ef0b7d2c5438eb",
-    build_secret:"5c8af767d1d603f9a99783af71d85b127d0f8535d340362e2422158b6bbccec4"
+    api_token:"90c598862d9b7a882d536397e2b64402a7da4864",
+    build_secret:"a63f9da4df2c85fcf47730b61e1890c1143217785aa51030a9fefb5a74cc9434"
   )
 end
 
