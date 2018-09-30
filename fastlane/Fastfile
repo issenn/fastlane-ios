@@ -11,7 +11,7 @@ before_all do |lane, options|
   # ENV['MAILGUN_APIKEY'] = '5d21a2e0cce1996b200d8f991d72856d-a4502f89-ce938adb'
   # ENV['FIR_APP_TOKEN'] = '9611b6a99d280463039cbb64b7eb24ca'
   ENV["GIT_BRANCH"] = git_branch
-  puts get_version_number(target: "HelloTalk_Binary", configuration: "Release")
+  puts get_version_number(xcodeproj: "HelloTalk_Binary.xcodeproj", target: "HelloTalk_Binary", configuration: "Release")
   ENV['CHANGELOG'] = read_changelog(
     changelog_path: './CHANGELOG.md', # Specify path to CHANGELOG.md
     section_identifier: '[Unreleased]', # Specify what section to read
