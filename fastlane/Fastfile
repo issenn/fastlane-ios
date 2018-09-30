@@ -112,7 +112,12 @@ lane :do_run_tests do |options|
   )
 end
 
-lane :test do |lane, options|
+desc "Submit a new Release Build to all"
+lane :do_publish_all do |lane, options|
+  do_publish
+end
+
+lane :do_publish do |lane, options|
   if files_matching(pattern: "Podfile") != nil
     cocoapods(
       repo_update: false,
@@ -167,7 +172,7 @@ lane :do_upload_firim do |lane, options|
       app_changelog: change_log
     )
     slack(
-      message: "Hi! @issenn \r\n A new app upload success \r\nFlavor: #{flavor} \r\n#{ENV['CHANGELOG']}",
+      message: "Hi! @issenn \r\n A new app upload success \r\n#{ENV['CHANGELOG']}",
       success: true,
       default_payloads: [:git_branch, :lane, :git_author, :test_result]
     )
@@ -176,7 +181,7 @@ lane :do_upload_firim do |lane, options|
       user_name: "update@hellotalk.com",
       password: "Hello123",
       subject: "default",
-      message_body: "Hi! @issenn \r\n A new app upload success \r\nFlavor: #{flavor} \r\n#{ENV['CHANGELOG']}"
+      message_body: "Hi! @issenn \r\n A new app upload success \r\n#{ENV['CHANGELOG']}"
     )
     $upload_retry=0
   rescue => ex
@@ -185,7 +190,7 @@ lane :do_upload_firim do |lane, options|
       do_upload_firim
     else
       slack(
-        message: "Hi! @issenn \r\n A new app upload failed \r\nFlavor: #{flavor}",
+        message: "Hi! @issenn \r\n A new app upload failed",
         success: false,
         default_payloads: [:git_branch, :lane, :git_author, :test_result]
       )
