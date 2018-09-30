@@ -12,6 +12,7 @@ before_all do |lane, options|
   # ENV['FIR_APP_TOKEN'] = '9611b6a99d280463039cbb64b7eb24ca'
   ENV["GIT_BRANCH"] = git_branch
   puts get_version_number
+  puts get_build_number
   ENV['CHANGELOG'] = read_changelog(
     changelog_path: './CHANGELOG.md', # Specify path to CHANGELOG.md
     section_identifier: '[Unreleased]', # Specify what section to read
