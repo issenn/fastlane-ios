@@ -89,35 +89,7 @@ lane :do_appfile_init do |options|
   }
 end
 
-lane :do_run_tests do |options|
-  prepare_lane_options(
-    options: options,
-    bind_params: [
-      Actions::BindParamBuilder.new(:test_scheme).env_var("TEST_SCHEME").ci_required().build(),
-      Actions::BindParamBuilder.new(:xcworkspace).env_var("XCWORKSPACE").build(),
-      Actions::BindParamBuilder.new(:xcodeproj).env_var("XCODEPROJ").build()
-    ]
-  )
-  if files_matching(pattern: "Podfile") != nil
-    cocoapods(
-      repo_update: true
-    )
-  end
-  scan(
-    workspace: options[:xcworkspace],
-    project: options[:xcodeproj],
-    scheme: options[:test_scheme],
-    slack_only_on_failure: (git_branch() != git_get_master_branch()),
-    clean: true
-  )
-end
-
-desc "Submit a new Release Build to all"
-lane :do_publish_all do |lane, options|
-  do_publish
-end
-
-lane :do_publish do |lane, options|
+lane :do_update_cocoapods do |lane, options|
   if files_matching(pattern: "Podfile") != nil
     cocoapods(
       repo_update: false,
@@ -144,6 +116,34 @@ lane :do_publish do |lane, options|
       }
     )
   end
+end
+
+lane :do_run_tests do |options|
+  prepare_lane_options(
+    options: options,
+    bind_params: [
+      Actions::BindParamBuilder.new(:test_scheme).env_var("TEST_SCHEME").ci_required().build(),
+      Actions::BindParamBuilder.new(:xcworkspace).env_var("XCWORKSPACE").build(),
+      Actions::BindParamBuilder.new(:xcodeproj).env_var("XCODEPROJ").build()
+    ]
+  )
+  do_update_cocoapods
+  scan(
+    workspace: options[:xcworkspace],
+    project: options[:xcodeproj],
+    scheme: options[:test_scheme],
+    slack_only_on_failure: (git_branch() != git_get_master_branch()),
+    clean: true
+  )
+end
+
+desc "Submit a new Release Build to all"
+lane :do_publish_all do |lane, options|
+  do_publish
+end
+
+lane :do_publish do |lane, options|
+  do_update_cocoapods
   match
   ENV['DELIVER_IPA_PATH']=gym(
     export_options: {
@@ -159,10 +159,18 @@ lane :do_publish do |lane, options|
   do_upload_firim
 end
 
+lane :test do |lane, options|
+  upload_symbols_to_crashlytics(
+    api_token: "71357d14bafe162f9a5211a7f7ef0b7d2c5438eb",
+    # dsym_path: "./build/IPA/MyApp.app.dSYM.zip"
+    dsym_path: "./build/IPA/MyApp.app.dSYM.zip"
+  )
+end
+
 lane :do_upload_firim do |lane, options|
   begin
     slack(
-      message: "Hi! @issenn \r\n A new app uploading \r\nFlavor: #{flavor}",
+      message: "Hi! @issenn \r\n A new app uploading",
       default_payloads: [:git_branch, :lane, :git_author]
     )
     change_log = "[#{ENV['GIT_BRANCH']}]\r\n---\r\n" + ENV['CHANGELOG']
@@ -200,7 +208,7 @@ lane :do_upload_firim do |lane, options|
   end
 end
 
-lane :do_get_cert_id do |lane, options|
+lane :do_lookup_cert_id do |lane, options|
   require 'spaceship'
   Spaceship.login('issenn@hellotalk.com')
   Spaceship.select_team
