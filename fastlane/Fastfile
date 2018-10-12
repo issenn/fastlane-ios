@@ -92,7 +92,7 @@ end
 lane :do_update_cocoapods do |lane, options|
   if files_matching(pattern: "Podfile") != nil
     cocoapods(
-      repo_update: false,
+      repo_update: true,
       silent: false,
       verbose: true,
       use_bundle_exec: true,
