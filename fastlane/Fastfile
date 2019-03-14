@@ -155,8 +155,8 @@ lane :do_publish do |lane, options|
       iCloudContainerEnvironment: "Production"
     }
   )
-  # upload_symbols_to_crashlytics()
-  # do_upload_firim
+  upload_symbols_to_crashlytics()
+  do_upload_firim
 end
 
 lane :do_upload_firim do |lane, options|
