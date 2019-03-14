@@ -147,7 +147,7 @@ lane :do_publish do |lane, options|
   match
   ENV['DELIVER_IPA_PATH']=gym(
     export_options: {
-      compileBitcode: false,
+      compileBitcode: true,
       stripSwiftSymbols: true,
       uploadBitcode: false,
       uploadSymbols: false,
