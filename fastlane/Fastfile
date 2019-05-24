@@ -23,13 +23,13 @@ before_all do |lane, options|
     message: "Hi! @channel \r\n A new build start",
     default_payloads: [:git_branch, :lane, :git_author]
   )
-  send_e_mail(
-    stmp_server: "smtp.exmail.qq.com",
-    user_name: "update@hellotalk.com",
-    password: "Hello123",
-    subject: "default",
-    message_body: "Hi! @issenn"
-  )
+  # send_e_mail(
+  #   stmp_server: "smtp.exmail.qq.com",
+  #   user_name: "update@hellotalk.com",
+  #   password: "Hello123",
+  #   subject: "default",
+  #   message_body: "Hi! @issenn"
+  # )
 end
 
 before_each do |lane, options|
@@ -176,13 +176,13 @@ lane :do_upload_firim do |lane, options|
       success: true,
       default_payloads: [:git_branch, :lane, :git_author, :test_result]
     )
-    send_e_mail(
-      stmp_server: "smtp.exmail.qq.com",
-      user_name: "update@hellotalk.com",
-      password: "Hello123",
-      subject: "default",
-      message_body: "Hi! @issenn \r\n A new app upload success \r\n#{ENV['CHANGELOG']}"
-    )
+    # send_e_mail(
+    #   stmp_server: "smtp.exmail.qq.com",
+    #   user_name: "update@hellotalk.com",
+    #   password: "Hello123",
+    #   subject: "default",
+    #   message_body: "Hi! @issenn \r\n A new app upload success \r\n#{ENV['CHANGELOG']}"
+    # )
     $upload_retry=0
   rescue => ex
     $upload_retry += 1
